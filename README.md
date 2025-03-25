@@ -1,10 +1,8 @@
-# hmmfetch
+# 🤔 hmmfetch
 
 [![npm version](https://img.shields.io/npm/v/hmmfetch.svg)](https://www.npmjs.com/package/hmmfetch)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/willswire/hmmfetch/test.yml?branch=main)](https://github.com/willswire/hmmfetch/actions/workflows/test.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/willswire/hmmfetch/codeql.yml?branch=main&label=CodeQL)](https://github.com/willswire/hmmfetch/actions/workflows/codeql.yml)
-[![npm downloads](https://img.shields.io/npm/dm/hmmfetch.svg)](https://www.npmjs.com/package/hmmfetch)
-[![License](https://img.shields.io/npm/l/hmmfetch.svg)](https://github.com/willswire/hmmfetch/blob/main/LICENSE)
 [![Node.js Version](https://img.shields.io/node/v/hmmfetch.svg)](https://nodejs.org)
 
 A minimalist wrapper around fetch() that adds believable, randomized headers.
