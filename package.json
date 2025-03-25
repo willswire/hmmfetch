@@ -1,0 +1,41 @@
+{
+  "name": "hmmfetch",
+  "version": "1.0.0",
+  "description": "A simple wrapper around fetch() that adds believable, randomized headers",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepare": "npm test",
+    "prepublishOnly": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willswire/hmmfetch.git"
+  },
+  "keywords": [
+    "fetch",
+    "headers",
+    "http",
+    "request",
+    "browser",
+    "user-agent",
+    "randomize",
+    "anti-bot",
+    "scraping"
+  ],
+  "author": "William Walker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willswire/hmmfetch/issues"
+  },
+  "homepage": "https://github.com/willswire/hmmfetch#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "node-fetch": "^3.3.2"
+  }
+}
