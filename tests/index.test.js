@@ -252,6 +252,10 @@ describe('generateHeaders', () => {
     const edgeMacHeaders = hmmfetch.generateHeaders({ browser: 'edge', os: 'mac' });
     expect(edgeMacHeaders['user-agent']).toContain('Macintosh');
     expect(edgeMacHeaders['user-agent']).toContain('Edg');
+
+    const edgeLinuxHeaders = hmmfetch.generateHeaders({ browser: 'edge', os: 'linux' });
+    expect(edgeLinuxHeaders['user-agent']).toContain('Linux');
+    expect(edgeLinuxHeaders['user-agent']).toContain('Edg');
   });
   
   test('should handle random option for browser', () => {

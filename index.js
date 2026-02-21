@@ -63,14 +63,11 @@ const LANGUAGES = [
   'es-MX,es;q=0.9',
   'fr-FR,fr;q=0.9',
   'de-DE,de;q=0.9',
-  'zh-CN,zh;q=0.9',
-  'zh-TW,zh;q=0.9',
   'ja-JP,ja;q=0.9',
   'ko-KR,ko;q=0.9',
   'pt-BR,pt;q=0.9',
   'pt-PT,pt;q=0.9',
-  'it-IT,it;q=0.9',
-  'ru-RU,ru;q=0.9'
+  'it-IT,it;q=0.9'
 ];
 
 /**
