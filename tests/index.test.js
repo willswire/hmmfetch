@@ -252,6 +252,10 @@ describe('generateHeaders', () => {
     const edgeMacHeaders = hmmfetch.generateHeaders({ browser: 'edge', os: 'mac' });
     expect(edgeMacHeaders['user-agent']).toContain('Macintosh');
     expect(edgeMacHeaders['user-agent']).toContain('Edg');
+
+    const edgeLinuxHeaders = hmmfetch.generateHeaders({ browser: 'edge', os: 'linux' });
+    expect(edgeLinuxHeaders['user-agent']).toContain('Linux');
+    expect(edgeLinuxHeaders['user-agent']).toContain('Edg');
   });
   
   test('should handle random option for browser', () => {
@@ -289,9 +293,41 @@ describe('generateHeaders', () => {
     const headers1 = hmmfetch.generateHeaders();
     expect(headers1).toHaveProperty('user-agent');
     expect(headers1).toHaveProperty('accept-language');
-    
+
     // Explicitly pass null options
     const headers2 = hmmfetch.generateHeaders(null);
     expect(headers2).toHaveProperty('user-agent');
+  });
+
+  test('should include accept-encoding header for all browsers', () => {
+    const browsers = ['chrome', 'firefox', 'safari', 'edge'];
+    for (const browser of browsers) {
+      const headers = hmmfetch.generateHeaders({ browser });
+      expect(headers).toHaveProperty('accept-encoding');
+    }
+  });
+
+  test('should include zstd in accept-encoding for Chrome and Edge', () => {
+    const chromeHeaders = hmmfetch.generateHeaders({ browser: 'chrome' });
+    expect(chromeHeaders['accept-encoding']).toContain('zstd');
+
+    const edgeHeaders = hmmfetch.generateHeaders({ browser: 'edge' });
+    expect(edgeHeaders['accept-encoding']).toContain('zstd');
+  });
+
+  test('should not include zstd in accept-encoding for Firefox and Safari', () => {
+    const firefoxHeaders = hmmfetch.generateHeaders({ browser: 'firefox' });
+    expect(firefoxHeaders['accept-encoding']).not.toContain('zstd');
+
+    const safariHeaders = hmmfetch.generateHeaders({ browser: 'safari' });
+    expect(safariHeaders['accept-encoding']).not.toContain('zstd');
+  });
+
+  test('should include priority header for Chrome and Edge', () => {
+    const chromeHeaders = hmmfetch.generateHeaders({ browser: 'chrome' });
+    expect(chromeHeaders).toHaveProperty('priority');
+
+    const edgeHeaders = hmmfetch.generateHeaders({ browser: 'edge' });
+    expect(edgeHeaders).toHaveProperty('priority');
   });
 });
