@@ -14,11 +14,12 @@ const BROWSERS = {
     },
     headers: (v) => ({
       'sec-ch-ua': `"Chromium";v="${v}", "Not:A-Brand";v="24", "Google Chrome";v="${v}"`,
+      'accept-encoding': 'gzip, deflate, br, zstd',
       'priority': 'u=0, i'
     })
   },
   firefox: {
-    versions: ['121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135'],
+    versions: ['121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136', '137'],
     ua: {
       windows: (v) => `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${v}.0) Gecko/20100101 Firefox/${v}.0`,
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:${v}.0) Gecko/20100101 Firefox/${v}.0`,
@@ -32,14 +33,16 @@ const BROWSERS = {
     }
   },
   edge: {
-    versions: ['120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134'],
+    versions: ['120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136', '137', '138', '139', '140'],
     ua: {
       windows: (v) => `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36 Edg/${v}.0.1823.58`,
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36 Edg/${v}.0.1823.58`,
       linux: (v) => `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36 Edg/${v}.0.1823.58`
     },
     headers: (v) => ({
-      'sec-ch-ua': `"Chromium";v="${v}", "Not:A-Brand";v="24", "Microsoft Edge";v="${v}"`
+      'sec-ch-ua': `"Chromium";v="${v}", "Not:A-Brand";v="24", "Microsoft Edge";v="${v}"`,
+      'accept-encoding': 'gzip, deflate, br, zstd',
+      'priority': 'u=0, i'
     })
   }
 };
@@ -53,15 +56,21 @@ const PLATFORMS = {
 
 // Common languages for the accept-language header
 const LANGUAGES = [
-  'en-US,en;q=0.9', 
-  'en-GB,en;q=0.9', 
+  'en-US,en;q=0.9',
+  'en-GB,en;q=0.9',
   'en-CA,en;q=0.9,fr-CA;q=0.8',
   'es-ES,es;q=0.9',
+  'es-MX,es;q=0.9',
   'fr-FR,fr;q=0.9',
   'de-DE,de;q=0.9',
   'zh-CN,zh;q=0.9',
+  'zh-TW,zh;q=0.9',
   'ja-JP,ja;q=0.9',
-  'ko-KR,ko;q=0.9'
+  'ko-KR,ko;q=0.9',
+  'pt-BR,pt;q=0.9',
+  'pt-PT,pt;q=0.9',
+  'it-IT,it;q=0.9',
+  'ru-RU,ru;q=0.9'
 ];
 
 /**
@@ -75,8 +84,7 @@ function random(array) {
  * Generates a set of believable HTTP headers
  */
 function generateHeaders(options = {}) {
-  // Default values for options
-  options = options || {};
+  options = options ?? {};
   
   // 1. Pick a browser
   const browserName = options.browser === 'random' || !options.browser
@@ -107,6 +115,7 @@ function generateHeaders(options = {}) {
   const headers = {
     // Common headers for all browsers
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-encoding': 'gzip, deflate, br',
     'accept-language': language,
     'cache-control': random(['max-age=0', 'no-cache']),
     'sec-fetch-dest': 'document',
