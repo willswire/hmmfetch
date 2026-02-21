@@ -5,8 +5,8 @@
 // Common browser profiles and their version ranges
 const BROWSERS = {
   chrome: {
-    versions: ['114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', 
-              '126', '127', '128', '129', '130', '131', '132', '133', '134', '135'],
+    versions: ['120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130',
+              '131', '132', '133', '134', '135', '136', '137', '138', '139', '140'],
     ua: {
       windows: (v) => `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36`,
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36`,
@@ -14,12 +14,11 @@ const BROWSERS = {
     },
     headers: (v) => ({
       'sec-ch-ua': `"Chromium";v="${v}", "Not:A-Brand";v="24", "Google Chrome";v="${v}"`,
-      'sec-ch-ua-mobile': '?0',
       'priority': 'u=0, i'
     })
   },
   firefox: {
-    versions: ['115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125', '126'],
+    versions: ['121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135'],
     ua: {
       windows: (v) => `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${v}.0) Gecko/20100101 Firefox/${v}.0`,
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:${v}.0) Gecko/20100101 Firefox/${v}.0`,
@@ -27,13 +26,13 @@ const BROWSERS = {
     }
   },
   safari: {
-    versions: ['16.0', '16.1', '16.2', '16.3', '16.4', '16.5', '16.6', '17.0', '17.1', '17.2', '17.3', '17.4'],
+    versions: ['16.4', '16.5', '16.6', '17.0', '17.1', '17.2', '17.3', '17.4', '17.5', '17.6', '18.0', '18.1', '18.2', '18.3'],
     ua: {
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${v} Safari/605.1.15`
     }
   },
   edge: {
-    versions: ['114', '115', '116', '117', '118', '119', '120', '121', '122', '123', '124', '125'],
+    versions: ['120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134'],
     ua: {
       windows: (v) => `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36 Edg/${v}.0.1823.58`,
       mac: (v) => `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${v}.0.0.0 Safari/537.36 Edg/${v}.0.1823.58`,
@@ -135,21 +134,43 @@ function generateHeaders(options = {}) {
 }
 
 /**
+ * Converts a Headers instance, array of entries, or plain object to a plain object.
+ */
+function toPlainHeaders(headers) {
+  if (!headers) return {};
+  if (Array.isArray(headers)) {
+    const obj = {};
+    for (const [key, value] of headers) {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  if (typeof headers.entries === 'function') {
+    const obj = {};
+    for (const [key, value] of headers.entries()) {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  return headers;
+}
+
+/**
  * Wrapper around fetch() that adds realistic browser headers
  */
 function hmmfetch(url, options = {}, headerOptions = {}) {
   // Create new options object to avoid modifying the original
   const newOptions = { ...options };
-  
-  // Initialize headers if not present
-  newOptions.headers = newOptions.headers || {};
-  
+
+  // Convert user headers to plain object (handles Headers instances, arrays, etc.)
+  const userHeaders = toPlainHeaders(newOptions.headers);
+
   // Add random headers, letting user-specified headers take precedence
   newOptions.headers = {
     ...generateHeaders(headerOptions),
-    ...newOptions.headers
+    ...userHeaders
   };
-  
+
   // Call original fetch with enhanced options
   return fetch(url, newOptions);
 }

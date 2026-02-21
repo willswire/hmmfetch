@@ -162,6 +162,42 @@ describe('hmmfetch', () => {
     expect(options.headers['accept-language']).toBe(testLanguage);
   });
 
+  test('should handle Headers instance in fetch options', async () => {
+    const url = 'https://example.com';
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'accept': 'application/json'
+    });
+
+    await hmmfetch(url, { headers });
+
+    const options = global.fetch.mock.calls[0][1];
+
+    // Custom headers from Headers instance should override defaults
+    // Note: Headers API normalizes names to lowercase
+    expect(options.headers['accept']).toBe('application/json');
+    expect(options.headers['content-type']).toBe('application/json');
+
+    // Generated headers should still be present if not overridden
+    expect(options.headers).toHaveProperty('user-agent');
+  });
+
+  test('should handle array-style headers in fetch options', async () => {
+    const url = 'https://example.com';
+    const headers = [
+      ['Content-Type', 'application/json'],
+      ['accept', 'application/json']
+    ];
+
+    await hmmfetch(url, { headers });
+
+    const options = global.fetch.mock.calls[0][1];
+
+    expect(options.headers['accept']).toBe('application/json');
+    expect(options.headers['Content-Type']).toBe('application/json');
+    expect(options.headers).toHaveProperty('user-agent');
+  });
+
   test('should use compatible OS for Safari', async () => {
     const url = 'https://example.com';
     

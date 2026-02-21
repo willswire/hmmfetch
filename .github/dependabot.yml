@@ -10,7 +10,6 @@ updates:
       dev-dependencies:
         patterns:
           - "jest"
-          - "node-fetch"
           - "@types/*"
         update-types:
           - "minor"
