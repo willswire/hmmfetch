@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/willswire/hmmfetch/compare/v1.3.0...v1.3.1) (2026-02-23)
+
+
+### Bug Fixes
+
+* update Node.js version in publish workflow ([4ffb6e2](https://github.com/willswire/hmmfetch/commit/4ffb6e22b598cb0934551707965775ba6563b79d))
+
 ## [1.3.0](https://github.com/willswire/hmmfetch/compare/v1.2.0...v1.3.0) (2026-02-23)
 
 
