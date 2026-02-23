@@ -17,6 +17,14 @@ export interface HeaderOptions {
    * Language string to use in accept-language header
    */
   language?: string | 'random';
+
+  /**
+   * Type of request to emulate, which controls sec-fetch-* headers
+   * - 'navigate': full page navigation (default)
+   * - 'fetch': JavaScript fetch() API call
+   * - 'xhr': XMLHttpRequest
+   */
+  fetchType?: 'navigate' | 'fetch' | 'xhr';
 }
 
 /**

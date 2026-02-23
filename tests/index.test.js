@@ -330,4 +330,59 @@ describe('generateHeaders', () => {
     const edgeHeaders = hmmfetch.generateHeaders({ browser: 'edge' });
     expect(edgeHeaders).toHaveProperty('priority');
   });
+
+  describe('fetchType option', () => {
+    test('should use navigate headers by default', () => {
+      const headers = hmmfetch.generateHeaders();
+      expect(headers['sec-fetch-dest']).toBe('document');
+      expect(headers['sec-fetch-mode']).toBe('navigate');
+      expect(headers['sec-fetch-site']).toBe('none');
+      expect(headers['sec-fetch-user']).toBe('?1');
+      expect(headers).toHaveProperty('upgrade-insecure-requests');
+      expect(headers['accept']).toContain('text/html');
+    });
+
+    test('should use navigate headers for fetchType: navigate', () => {
+      const headers = hmmfetch.generateHeaders({ fetchType: 'navigate' });
+      expect(headers['sec-fetch-dest']).toBe('document');
+      expect(headers['sec-fetch-mode']).toBe('navigate');
+      expect(headers['sec-fetch-user']).toBe('?1');
+      expect(headers).toHaveProperty('upgrade-insecure-requests');
+    });
+
+    test('should use fetch headers for fetchType: fetch', () => {
+      const headers = hmmfetch.generateHeaders({ fetchType: 'fetch' });
+      expect(headers['sec-fetch-dest']).toBe('empty');
+      expect(headers['sec-fetch-mode']).toBe('cors');
+      expect(headers['sec-fetch-site']).toBe('cross-site');
+      expect(headers['accept']).toBe('*/*');
+      expect(headers).not.toHaveProperty('sec-fetch-user');
+      expect(headers).not.toHaveProperty('upgrade-insecure-requests');
+      expect(headers).not.toHaveProperty('x-requested-with');
+    });
+
+    test('should use xhr headers for fetchType: xhr', () => {
+      const headers = hmmfetch.generateHeaders({ fetchType: 'xhr' });
+      expect(headers['sec-fetch-dest']).toBe('empty');
+      expect(headers['sec-fetch-mode']).toBe('cors');
+      expect(headers['sec-fetch-site']).toBe('cross-site');
+      expect(headers['accept']).toBe('*/*');
+      expect(headers['x-requested-with']).toBe('XMLHttpRequest');
+      expect(headers).not.toHaveProperty('sec-fetch-user');
+      expect(headers).not.toHaveProperty('upgrade-insecure-requests');
+    });
+
+    test('should default to navigate for invalid fetchType', () => {
+      const headers = hmmfetch.generateHeaders({ fetchType: 'invalid' });
+      expect(headers['sec-fetch-dest']).toBe('document');
+      expect(headers['sec-fetch-mode']).toBe('navigate');
+    });
+
+    test('should apply fetchType alongside other options', () => {
+      const headers = hmmfetch.generateHeaders({ browser: 'chrome', fetchType: 'fetch' });
+      expect(headers['sec-fetch-dest']).toBe('empty');
+      expect(headers['user-agent']).toContain('Chrome');
+      expect(headers).toHaveProperty('sec-ch-ua');
+    });
+  });
 });
