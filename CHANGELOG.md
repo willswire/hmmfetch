@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/willswire/hmmfetch/compare/v1.3.1...v1.3.2) (2026-02-23)
+
+
+### Bug Fixes
+
+* adopt publish logic into release workflow ([#27](https://github.com/willswire/hmmfetch/issues/27)) ([0219dac](https://github.com/willswire/hmmfetch/commit/0219dac700f97e8ef447aa89dfa2df7dd5326510))
+
 ## [1.3.1](https://github.com/willswire/hmmfetch/compare/v1.3.0...v1.3.1) (2026-02-23)
 
 
