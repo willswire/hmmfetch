@@ -37,7 +37,7 @@ npm run test:coverage
 1. Update version in package.json
 2. Commit changes
 3. Tag the release: `git tag v1.x.x`
-4. Push with tags: `git push --tags`
+4. Push with tags: `git push --follow-tags`
 5. The GitHub Action will automatically publish to npm
 
 ## License
