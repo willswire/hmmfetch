@@ -5,7 +5,7 @@
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/willswire/hmmfetch/codeql.yml?branch=main&label=CodeQL)](https://github.com/willswire/hmmfetch/actions/workflows/codeql.yml)
 [![Node.js Version](https://img.shields.io/node/v/hmmfetch.svg)](https://nodejs.org)
 
-A minimalist wrapper around fetch() that adds believable, randomized headers.
+A simple wrapper around fetch() that adds believable, randomized headers.
 
 ## Installation
 
@@ -16,8 +16,11 @@ npm install hmmfetch
 ## Usage
 
 ```javascript
-// Import the library
+// CommonJS
 const hmmfetch = require('hmmfetch');
+
+// ESM
+import hmmfetch from 'hmmfetch';
 
 // Use it like normal fetch
 hmmfetch('https://example.com')
@@ -103,4 +106,4 @@ console.log(chromeHeaders);
 
 ## License
 
-ISC
+[ISC](./LICENSE)

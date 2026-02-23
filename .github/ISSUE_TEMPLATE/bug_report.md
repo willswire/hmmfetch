@@ -21,7 +21,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Environment:**
- - Node.js version: [e.g. 18.15.0]
+ - Node.js version: [e.g. 20.0.0]
  - hmmfetch version: [e.g. 1.0.0]
  - OS: [e.g. Ubuntu 22.04]
 
