@@ -1,6 +1,6 @@
 {
   "name": "hmmfetch",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "A simple wrapper around fetch() that adds believable, randomized headers",
   "main": "index.js",
   "types": "index.d.ts",
