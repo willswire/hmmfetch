@@ -108,29 +108,49 @@ function generateHeaders(options = {}) {
     ? random(LANGUAGES)
     : options.language;
   
-  // 5. Build the headers object
-  const headers = {
-    // Common headers for all browsers
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-    'accept-encoding': 'gzip, deflate, br',
-    'accept-language': language,
-    'cache-control': random(['max-age=0', 'no-cache']),
-    'sec-fetch-dest': 'document',
-    'sec-fetch-mode': 'navigate',
-    'sec-fetch-site': 'none',
-    'sec-fetch-user': '?1',
-    'upgrade-insecure-requests': '1',
-    // User agent is always required
-    'user-agent': browser.ua[os](version)
-  };
+  // 5. Determine fetch type (default: navigate)
+  const fetchType = ['navigate', 'fetch', 'xhr'].includes(options.fetchType)
+    ? options.fetchType
+    : 'navigate';
+
+  // 6. Build the headers object based on fetch type
+  let headers;
+
+  if (fetchType === 'navigate') {
+    headers = {
+      'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+      'accept-encoding': 'gzip, deflate, br',
+      'accept-language': language,
+      'cache-control': random(['max-age=0', 'no-cache']),
+      'sec-fetch-dest': 'document',
+      'sec-fetch-mode': 'navigate',
+      'sec-fetch-site': 'none',
+      'sec-fetch-user': '?1',
+      'upgrade-insecure-requests': '1',
+      'user-agent': browser.ua[os](version)
+    };
+  } else {
+    headers = {
+      'accept': '*/*',
+      'accept-encoding': 'gzip, deflate, br',
+      'accept-language': language,
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'cross-site',
+      'user-agent': browser.ua[os](version)
+    };
+    if (fetchType === 'xhr') {
+      headers['x-requested-with'] = 'XMLHttpRequest';
+    }
+  }
   
-  // 6. Add browser-specific headers
+  // 7. Add browser-specific headers
   if (browser.headers) {
     const specificHeaders = browser.headers(version);
     Object.assign(headers, specificHeaders);
   }
-  
-  // 7. Add sec-ch-ua-platform for browsers that support it
+
+  // 8. Add sec-ch-ua-platform for browsers that support it
   if (['chrome', 'edge'].includes(browserName)) {
     headers['sec-ch-ua-platform'] = PLATFORMS[os];
     headers['sec-ch-ua-mobile'] = '?0'; 

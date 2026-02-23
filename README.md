@@ -104,6 +104,20 @@ console.log(chromeHeaders);
   - Any valid accept-language value
   - `'random'`: Random selection (default)
 
+### Fetch Type Options
+- `fetchType`: What kind of request to emulate, controlling `sec-fetch-*` headers
+  - `'navigate'`: Full page navigation — `sec-fetch-dest: document`, includes `upgrade-insecure-requests` (default)
+  - `'fetch'`: JavaScript `fetch()` call — `sec-fetch-dest: empty`, `sec-fetch-mode: cors`, `accept: */*`
+  - `'xhr'`: XMLHttpRequest — same as `fetch` plus `x-requested-with: XMLHttpRequest`
+
+```javascript
+// Emulate a fetch() API call instead of a page navigation
+hmmfetch('https://api.example.com/data', {}, { fetchType: 'fetch' })
+
+// Emulate an XMLHttpRequest
+hmmfetch('https://api.example.com/data', {}, { fetchType: 'xhr' })
+```
+
 ## License
 
 [ISC](./LICENSE)
