@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/willswire/hmmfetch/compare/v1.3.3...v1.3.4) (2026-02-26)
+
+
+### Bug Fixes
+
+* revert ESM bundling in lieu of CJS ([c84f115](https://github.com/willswire/hmmfetch/commit/c84f1152b7091c1ec337bb4cdbaab0901442565e))
+
 ## [1.3.3](https://github.com/willswire/hmmfetch/compare/v1.3.2...v1.3.3) (2026-02-23)
 
 
